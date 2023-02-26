@@ -13,6 +13,7 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
         def heisenberg_trotter(couplings, T, depth, noise_probability, noise_strength):
             simulate_heisenberg_model(wires, couplings, T, depth, noise_probability, noise_strength)
             return qml.state()
+    
         start = timer()
         state = heisenberg_trotter(couplings, T, depth, noise_probability, noise_strength)
         end = timer()
