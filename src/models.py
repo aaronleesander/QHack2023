@@ -15,18 +15,18 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=
     Returns:
         (numpy.tensor): The evolved quantum state.
     """
-    J_x = -2*couplings[0]*T/depth
-    J_y = -2*couplings[1]*T/depth
-    J_z = -2*couplings[2]*T/depth
-    h = -2*couplings[3]*T/depth
+    angle_XX = -2*couplings['J_xx']*T/depth
+    angle_YY = -2*couplings['J_yy']*T/depth
+    angle_ZZ = -2*couplings['J_zz']*T/depth
+    angle_X = -2*couplings['h']*T/depth
 
     for j in range(depth):
         for wire in range(num_wires):
         #first the XX, YY, ZZ part:
-            XX(J_x, wire, num_wires, noise_probability, noise_strength)
+            XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            YY(J_y, wire, num_wires, noise_probability, noise_strength)
+            YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            ZZ(J_z, wire, num_wires, noise_probability, noise_strength)
+            ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            X(h, wire)
+            X(angle_X, wire)
