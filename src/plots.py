@@ -30,3 +30,13 @@ def plot_fidelities_vs_noise_changing_depth(noise_strength_list, fidelities, dep
     plt.ylabel("Fidelity")
     plt.legend()
     plt.show()
+
+
+def plot_entropies_vs_time(entropies_list, noise_probability_list):
+    for i, noise_probability in enumerate(noise_probability_list):
+        plt.plot(entropies_list[i], label="Prob = "+str(noise_probability))
+    plt.title("Entropy vs. Time (Heisenberg Model)")
+    plt.xlabel("Time")
+    plt.ylabel("Entropy")
+    plt.legend()
+    plt.show()
