@@ -13,7 +13,7 @@ def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth):
 
 
 def plot_fidelities_vs_noise(p_list, fidelities, depth):
-    plt.plot(p_list, fidelities)
+    plt.plot(p_list, fidelities, marker='*', linestyle='')
     plt.xscale('log')
     plt.title("Fidelity vs. Noise (Heisenberg Model, Depth=%d)" % depth)
     plt.xlabel("p")

@@ -23,42 +23,58 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
     return runtimes
 
 
-def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list):
-    fidelities = []
-    for p in p_list:
+def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list, samples):
+    all_fidelities = []
+    for i in range(samples):
+        fidelities = []
+        for p in p_list:
+            dev = qml.device(backend, wires=wires)
+
+            # TODO: Only calculate noiseless state once rather than in fidelity
+            @qml.qnode(dev)
+            def heisenberg_trotter(couplings, T, depth, p):
+                simulate_heisenberg_model(wires, couplings, T, depth, p)
+                return qml.state()
+            noiseless_state = heisenberg_trotter(couplings, T, depth, p=0)
+            fidelity = qml.math.fidelity(noiseless_state, heisenberg_trotter(couplings, T, depth, p))
+
+            fidelities.append(fidelity)
+        all_fidelities.append(fidelities)
+
+    all_fidelities = np.transpose(all_fidelities)
+    avg_fidelities = []
+    for fidelities in all_fidelities:
+        avg_fidelities.append(np.mean(fidelities, axis=0))
+
+    return avg_fidelities
+
+
+def calculate_heisenberg_entropy_vs_time(backend, wires, couplings, T, depth, p, samples):
+    all_entropies = []
+    for i in range(samples):
         dev = qml.device(backend, wires=wires)
 
-        # TODO: Only calculate noiseless state once rather than in fidelity
         @qml.qnode(dev)
-        def heisenberg_trotter(couplings, T, depth, p):
-            simulate_heisenberg_model(wires, couplings, T, depth, p)
+        def heisenberg_trotter(init_state, couplings, dt, p):
+            qml.QubitStateVector(init_state, wires=range(wires))
+            simulate_heisenberg_model_single_timestep(wires, couplings, dt, p)
             return qml.state()
-        noiseless_state = heisenberg_trotter(couplings, T, depth, p=0)
-        fidelity = qml.math.fidelity(noiseless_state, heisenberg_trotter(couplings, T, depth, p))
 
-        fidelities.append(fidelity)
+        init_state = np.zeros(2**wires)
+        init_state[0] = 1
+        entropies = []
 
-    return fidelities
+        dt = T / depth
+        for i in range(depth):
+            state = heisenberg_trotter(init_state, couplings, dt, p)
+            entropy = qml.math.vn_entropy(state, indices=[w for w in range(wires//2)])
+            entropies.append(entropy)
+            init_state = state
+        all_entropies.append(entropies)
 
+    all_entropies = np.transpose(all_entropies)
+    avg_entropies = []
+    for entropies in all_entropies:
+        avg_entropies.append(np.mean(entropies, axis=0))
 
-def calculate_heisenberg_entropy_vs_time(backend, wires, couplings, T, depth, p):
-    dev = qml.device(backend, wires=wires)
-
-    @qml.qnode(dev)
-    def heisenberg_trotter(init_state, couplings, dt, p):
-        qml.QubitStateVector(init_state, wires=range(wires))
-        simulate_heisenberg_model_single_timestep(wires, couplings, dt, p)
-        return qml.state()
-
-    init_state = np.zeros(2**wires)
-    init_state[0] = 1
-    entropies = []
-
-    dt = T / depth
-    for i in range(depth):
-        state = heisenberg_trotter(init_state, couplings, dt, p)
-        entropy = qml.math.vn_entropy(state, indices=[w for w in range(wires//2)])
-        entropies.append(entropy)
-        init_state = state
-
-    return entropies
+    return avg_entropies
