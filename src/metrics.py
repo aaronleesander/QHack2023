@@ -4,7 +4,7 @@ import pennylane.numpy as np
 from .models import simulate_heisenberg_model
 
 
-def calculate_fidelity(dev, couplings, p, time, depth):
+def calculate_fidelity(num_wires, couplings, T, depth, noise_probability=0, noise_strength=0):
     """This function returns the fidelity between the final states of the noisy and
     noiseless Trotterizations of the Heisenberg models, using only CNOT and rotation gates
     Args:
@@ -18,4 +18,4 @@ def calculate_fidelity(dev, couplings, p, time, depth):
     Returns:
         (float): Fidelity between final states of the noisy and noiseless Trotterizations
     """
-    return qml.math.fidelity(simulate_heisenberg_model(dev, couplings,0,time, depth),simulate_heisenberg_model(dev, couplings,p,time,depth))
+    return qml.math.fidelity(heisenberg_trotter(num_wires, couplings, T, depth, noise_probability=0, noise_strength=0), heisenberg_trotter(num_wires, couplings, T, depth, noise_probability, noise_strength))
