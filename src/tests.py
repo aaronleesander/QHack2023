@@ -23,9 +23,9 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
     return runtimes
 
 
-def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, noise_probability, noise_strength_list):
+def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, noise_probability_list, noise_strength):
     fidelities = []
-    for noise_strength in noise_strength_list:
+    for noise_probability in noise_probability_list:
         dev = qml.device(backend, wires=wires)
 
         # TODO: Only calculate noiseless state once rather than in fidelity
