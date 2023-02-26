@@ -1,7 +1,7 @@
 from .gates import R_XX, R_YY, R_ZZ, R_X
 
 
-def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=0, noise_strength=0):
+def simulate_heisenberg_model(num_wires, couplings, T, depth, p=0):
     """This QNode returns the final state of the spin chain after evolution for a time t, 
     under the Trotter approximation of the exponential of the Heisenberg Hamiltonian.
     
@@ -22,16 +22,16 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=
 
     for j in range(depth):
         for wire in range(num_wires):
-            R_XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
+            R_XX(angle_XX, wire, num_wires, p)
         for wire in range(num_wires):
-            R_YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
+            R_YY(angle_YY, wire, num_wires, p)
         for wire in range(num_wires):
-            R_ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
+            R_ZZ(angle_ZZ, wire, num_wires, p)
         for wire in range(num_wires):
             R_X(angle_X, wire)
 
 
-def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, noise_probability=0, noise_strength=0):
+def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p):
     """This QNode returns the final state of the spin chain after evolution for a time t, 
     under the Trotter approximation of the exponential of the Heisenberg Hamiltonian.
     
@@ -51,10 +51,10 @@ def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, noise_pr
     angle_X = -2*couplings['h']*dt
 
     for wire in range(num_wires):
-        R_XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
+        R_XX(angle_XX, wire, num_wires, p)
     for wire in range(num_wires):
-        R_YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
+        R_YY(angle_YY, wire, num_wires, p)
     for wire in range(num_wires):
-        R_ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
+        R_ZZ(angle_ZZ, wire, num_wires, p)
     for wire in range(num_wires):
         R_X(angle_X, wire)

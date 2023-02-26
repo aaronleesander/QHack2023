@@ -12,8 +12,8 @@ def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth):
     plt.show()
 
 
-def plot_fidelities_vs_noise(noise_probability_list, fidelities, depth):
-    plt.plot(noise_probability_list, fidelities)
+def plot_fidelities_vs_noise(p_list, fidelities, depth):
+    plt.plot(p_list, fidelities)
     plt.xscale('log')
     plt.title("Fidelity vs. Noise (Heisenberg Model, Depth=%d)" % depth)
     plt.xlabel("p")
@@ -21,9 +21,9 @@ def plot_fidelities_vs_noise(noise_probability_list, fidelities, depth):
     plt.show()
 
 
-def plot_fidelities_vs_noise_changing_depth(noise_probability_list, fidelities, depth_list):
+def plot_fidelities_vs_noise_changing_depth(p_list, fidelities, depth_list):
     for i, depth in enumerate(depth_list):
-        plt.loglog(noise_probability_list, fidelities[i], label="Depth = "+str(depth))
+        plt.loglog(p_list, fidelities[i], label="Depth = "+str(depth))
 
     plt.title("Fidelity vs. Noise (Heisenberg Model)")
     plt.xlabel("p")
@@ -32,9 +32,9 @@ def plot_fidelities_vs_noise_changing_depth(noise_probability_list, fidelities, 
     plt.show()
 
 
-def plot_entropies_vs_time(entropies_list, noise_probability_list):
-    for i, noise_probability in enumerate(noise_probability_list):
-        plt.plot(entropies_list[i], label="Prob = "+str(noise_probability))
+def plot_entropies_vs_time(entropies_list, p_list):
+    for i, p in enumerate(p_list):
+        plt.plot(entropies_list[i], label="p = "+str(p))
     plt.title("Entropy vs. Time (Heisenberg Model)")
     plt.xlabel("Time")
     plt.ylabel("Entropy")
