@@ -22,7 +22,6 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=
 
     for j in range(depth):
         for wire in range(num_wires):
-        #first the XX, YY, ZZ part:
             R_XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
             R_YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
@@ -30,3 +29,4 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=
             R_ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
             R_X(angle_X, wire)
+

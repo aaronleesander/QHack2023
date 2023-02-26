@@ -32,6 +32,5 @@ def R_ZZ(angle, wire, num_wires, noise_probability, noise_strength):
     qml.CNOT([wire,(wire+1)%num_wires])
     apply_Pauli_noise(wire, noise_probability, noise_strength)
 
-
 def R_X(angle, wire):
     qml.RX(angle, wires=wire)
