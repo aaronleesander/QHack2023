@@ -19,3 +19,14 @@ def plot_fidelities_vs_noise(noise_strength_list, fidelities, depth):
     plt.xlabel("Noise Strength ($\gamma J$)")
     plt.ylabel("Fidelity")
     plt.show()
+
+
+def plot_fidelities_vs_noise_changing_depth(noise_strength_list, fidelities, depth_list):
+    for i, depth in enumerate(depth_list):
+        plt.loglog(noise_strength_list, fidelities[i], label="Depth = "+str(depth))
+
+    plt.title("Fidelity vs. Noise (Heisenberg Model)")
+    plt.xlabel("Noise Strength ($\gamma J$)")
+    plt.ylabel("Fidelity")
+    plt.legend()
+    plt.show()
