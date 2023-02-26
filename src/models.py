@@ -1,4 +1,4 @@
-from .gates import XX, YY, ZZ, X
+from .gates import R_XX, R_YY, R_ZZ, R_X
 
 
 def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=0, noise_strength=0):
@@ -23,10 +23,10 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, noise_probability=
     for j in range(depth):
         for wire in range(num_wires):
         #first the XX, YY, ZZ part:
-            XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
+            R_XX(angle_XX, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
+            R_YY(angle_YY, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
+            R_ZZ(angle_ZZ, wire, num_wires, noise_probability, noise_strength)
         for wire in range(num_wires):
-            X(angle_X, wire)
+            R_X(angle_X, wire)
