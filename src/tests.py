@@ -78,3 +78,26 @@ def calculate_heisenberg_entropy_vs_time(backend, wires, couplings, T, depth, p,
         avg_entropies.append(np.mean(entropies, axis=0))
 
     return avg_entropies
+
+def find_ground_state(backend, wires, couplings):
+    dev = qml.device(backend, wires=wires)
+
+    @qml.qnode(dev)
+    def model(params, H):
+        """
+        To implement VQE you need an ansatz for the candidate ground state!
+        Define here the VQE ansatz in terms of some parameters (params) that
+        create the candidate ground state. These parameters will
+        be optimized later.
+
+        Args:
+            params (numpy.array): parameters to be used in the variational circuit
+            H (qml.Hamiltonian): Hamiltonian used to calculate the expected value
+
+        Returns:
+            (float): Expected value with respect to the Hamiltonian H
+        """
+
+        #TODO: finish this function
+        raise NotImplemented('not yet implemented')
+        #return qml.expval(H)

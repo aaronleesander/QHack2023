@@ -1,4 +1,5 @@
 from .gates import R_XX, R_YY, R_ZZ, R_X
+import pennylane as qml
 
 
 def simulate_heisenberg_model(num_wires, couplings, T, depth, p=0):
@@ -58,3 +59,31 @@ def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p):
         R_ZZ(angle_ZZ, wire, num_wires, p)
     for wire in range(num_wires):
         R_X(angle_X, wire)
+
+def create_vqe_ansatz(params, wires):
+    """
+    VQE ansatz for optimization
+    NOTE: len(params) = 4*wires
+    Args:
+        params (numpy.array): parameters to be used in the variational circuit
+        H (qml.Hamiltonian): Hamiltonian used to calculate the expected value
+
+    Returns:
+        (float): Expected value with respect to the Hamiltonian H
+    """
+    for i in range(wires):
+        qml.RY(params[i], wires=i)
+    
+    for i in range(wires):
+        qml.CNOT([i,(i+1)%wires])
+    for i in range(wires, 2*wires):
+        qml.RZ(params[i+4], wires=i)       
+    
+    for i in range(2*wires, 3*wires):
+        qml.RY(params[i+8], wires=i)
+    
+    for i in range(wires):
+        qml.CNOT([i,(i+1)%wires])
+
+    for i in range(3*wires, 4*wires):
+        qml.RZ(params[i+12], wires=i)
