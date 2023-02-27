@@ -5,16 +5,18 @@ from timeit import default_timer as timer
 from .models import simulate_heisenberg_model, simulate_heisenberg_model_single_timestep
 
 
-def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T, depth, p, samples):
+def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T, depth, p, samples=1):
     runtimes = []
     for wires in num_wires_list:
         start = timer()
+        if backend == 'default.mixed':
+            samples = 1
         for _ in range(samples):
             dev = qml.device(backend, wires=wires)
 
             @qml.qnode(dev)
             def heisenberg_trotter(couplings, T, depth, p):
-                simulate_heisenberg_model(wires, couplings, T, depth, p)
+                simulate_heisenberg_model(wires, couplings, T, depth, p, backend)
                 return qml.state()
 
             _ = heisenberg_trotter(couplings, T, depth, p)
@@ -24,8 +26,10 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
     return runtimes
 
 
-def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list, samples):
+def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list, samples=1):
     all_fidelities = []
+    if backend == 'default.mixed':
+            samples = 1
     for i in range(samples):
         fidelities = []
         for p in p_list:

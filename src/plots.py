@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 
 
-def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth):
-    plt.plot(runtimes_model1, label="CPU")
-    plt.plot(runtimes_model2, label="GPU")
+def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth, p=0, labels=["CPU", "GPU"]):
+    plt.plot(runtimes_model1, label=labels[0])
+    plt.plot(runtimes_model2, label=labels[1])
 
-    plt.title("Runtime vs. Wires (Heisenberg Model, Depth=%d)" % depth)
+    plt.title(f"Runtime vs. Wires (Heisenberg Model, Depth={depth}, p={p})")
     plt.xlabel("# Wires")
     plt.ylabel("Runtime (s)")
     plt.legend()
