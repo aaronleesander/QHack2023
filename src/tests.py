@@ -34,6 +34,7 @@ def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, cou
             samples = 1
         state = np.zeros((2**wires,2**wires), dtype=complex)
         start = timer()
+        state_list = []
         for _ in range(samples):
             dev = qml.device(backend, wires=wires)
 
@@ -43,11 +44,17 @@ def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, cou
                 return qml.state()
 
             s = heisenberg_trotter(couplings, T, depth, p)
-            if backend == 'default.mixed':
-                state += s
-            else:
-                state += np.outer(s, s.conj())
+
+            state_list.append(s)
         end = timer()
+
+        if backend == 'default.mixed':
+            for s in state_list:
+                state += s
+        else:
+            for s in state_list:
+                state += np.outer(s, s.conj())
+
         runtimes.append(end - start)
         states.append(state/samples)
     return runtimes, states
