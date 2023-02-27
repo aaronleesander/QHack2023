@@ -31,7 +31,7 @@ def plot_error_vs_qubits(num_wires_list, errors, depth, p=0, samples=1, save=Tru
     if save:
         plt.savefig(f"error_p{p}_samples{samples}.pdf", format="pdf", bbox_inches='tight')
     plt.show()
-
+    
 
 def plot_fidelities_vs_noise_changing_depth(p_list, fidelities, depth_list):
     for i, depth in enumerate(depth_list):
