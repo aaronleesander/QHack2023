@@ -25,6 +25,33 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
 
     return runtimes
 
+def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, couplings, T, depth, p, samples=1):
+    """this function returns both the runtime and fidelity"""
+    runtimes = []
+    states = []
+    for wires in num_wires_list:
+        if backend == 'default.mixed':
+            samples = 1
+        state = np.zeros((2**wires,2**wires), dtype=complex)
+        start = timer()
+        for _ in range(samples):
+            dev = qml.device(backend, wires=wires)
+
+            @qml.qnode(dev)
+            def heisenberg_trotter(couplings, T, depth, p):
+                simulate_heisenberg_model(wires, couplings, T, depth, p, backend)
+                return qml.state()
+
+            s = heisenberg_trotter(couplings, T, depth, p)
+            if backend == 'default.mixed':
+                state += s
+            else:
+                state += np.outer(s, s.conj())
+        end = timer()
+        runtimes.append(end - start)
+        states.append(state/samples)
+    return runtimes, states
+
 
 def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list, samples=1):
     all_fidelities = []

@@ -1,14 +1,16 @@
 import matplotlib.pyplot as plt
 
 
-def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth, p=0, labels=["CPU", "GPU"]):
+def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth, p=0, labels=["CPU", "GPU"], samples=1, save=True):
+    plt.figure(figsize=[10, 8])
     plt.plot(runtimes_model1, label=labels[0])
     plt.plot(runtimes_model2, label=labels[1])
-
-    plt.title(f"Runtime vs. Wires (Heisenberg Model, Depth={depth}, p={p})")
+    plt.title(f"Runtime vs. Wires (Heisenberg Model, Depth={depth}, p={p}), samples={samples})")
     plt.xlabel("# Wires")
     plt.ylabel("Runtime (s)")
     plt.legend()
+    if save:
+        plt.savefig(f"time_p{p}_samples{samples}.pdf", format="pdf", bbox_inches='tight')
     plt.show()
 
 
@@ -18,6 +20,16 @@ def plot_fidelities_vs_noise(p_list, fidelities, depth):
     plt.title("Fidelity vs. Noise (Heisenberg Model, Depth=%d)" % depth)
     plt.xlabel("p")
     plt.ylabel("Fidelity")
+    plt.show()
+
+def plot_error_vs_qubits(num_wires_list, errors, depth, p=0, samples=1, save=True):
+    plt.figure(figsize=[10, 8])
+    plt.plot(num_wires_list, errors, marker='*', linestyle='--')
+    plt.title(f"Runtime vs. Wires (Heisenberg Model, Depth={depth}, p={p}, samples={samples})")
+    plt.xlabel("# wires")
+    plt.ylabel("Error")
+    if save:
+        plt.savefig(f"error_p{p}_samples{samples}.pdf", format="pdf", bbox_inches='tight')
     plt.show()
 
 
