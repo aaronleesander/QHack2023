@@ -21,7 +21,7 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, p=0):
     angle_ZZ = -2*couplings['J_zz']*T/depth
     angle_X = -2*couplings['h']*T/depth
 
-    for j in range(depth):
+    for _ in range(depth):
         for wire in range(num_wires):
             R_XX(angle_XX, wire, num_wires, p)
         for wire in range(num_wires):
@@ -59,6 +59,7 @@ def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p):
         R_ZZ(angle_ZZ, wire, num_wires, p)
     for wire in range(num_wires):
         R_X(angle_X, wire)
+
 
 def create_vqe_ansatz(params, wires):
     """
