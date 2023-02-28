@@ -5,7 +5,7 @@ This repository was created for the QHack2023 Hackathon.
 This project was an equal collaboration between Lion Frangioulis (lion.frangoulis@tum.de), Cristian Emiliano Godinez Ramirez (cristian.godinez@tum.de), Emily Haworth (ge96puk@mytum.de),
 and Aaron Sander (aaron.sander@tum.de) from the Technical University of Munich.
 
-
+A detailed report on this project can be found in the docs folder.
 
 ## Abstract
 
@@ -23,3 +23,5 @@ More information can be found at:
 PennyLane-Lightning: https://github.com/PennyLaneAI/pennylane-lightning
 PennyLane-Lightning-GPU: https://github.com/PennyLaneAI/pennylane-lightning-gpu
 NVidia cuQuantum: https://github.com/NVIDIA/cuQuantum
+
+# References
