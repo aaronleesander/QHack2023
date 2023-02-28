@@ -1,6 +1,7 @@
 # QHack2023
 
 This repository was created for the QHack2023 Hackathon.
+
 This project was an equal collaboration between Lion Frangioulis, Cristian Emiliano Godinez Ramirez, Emily Haworth, and Aaron Sander from the Technical University of Munich.
 
 ## Abstract
