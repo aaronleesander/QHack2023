@@ -94,9 +94,38 @@ def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, 
             # TODO: Only calculate noiseless state once rather than in fidelity
             @qml.qnode(dev)
             def heisenberg_trotter(couplings, T, depth, p):
-                simulate_heisenberg_model(wires, couplings, T, depth, p)
+                simulate_heisenberg_model(wires, couplings, T, depth, p, backend)
                 return qml.state()
             noiseless_state = heisenberg_trotter(couplings, T, depth, p=0)
+            fidelity = qml.math.fidelity(noiseless_state, heisenberg_trotter(couplings, T, depth, p))
+
+            fidelities.append(fidelity)
+        all_fidelities.append(fidelities)
+
+    all_fidelities = np.transpose(all_fidelities)
+    avg_fidelities = []
+    for fidelities in all_fidelities:
+        avg_fidelities.append(np.mean(fidelities, axis=0))
+
+    return avg_fidelities
+
+
+def calculate_heisenberg_fidelity_vs_qubits(backend, num_wires_list, couplings, T, depth, p, samples=1):
+    all_fidelities = []
+    if backend == 'default.mixed':
+            samples = 1
+    for i in range(samples):
+        fidelities = []
+        for wires in num_wires_list:
+            dev = qml.device(backend, wires=wires)
+
+            # TODO: Only calculate noiseless state once rather than in fidelity
+            @qml.qnode(dev)
+            def heisenberg_trotter(couplings, T, depth, p, backend):
+                simulate_heisenberg_model(wires, couplings, T, depth, p, backend)
+                return qml.state()
+            if i == 0:
+                noiseless_state = heisenberg_trotter(couplings, T, depth, p=0, backend='default.mixed')
             fidelity = qml.math.fidelity(noiseless_state, heisenberg_trotter(couplings, T, depth, p))
 
             fidelities.append(fidelity)
@@ -118,7 +147,7 @@ def calculate_heisenberg_entropy_vs_time(backend, wires, couplings, T, depth, p,
         @qml.qnode(dev)
         def heisenberg_trotter(init_state, couplings, dt, p):
             qml.QubitStateVector(init_state, wires=range(wires))
-            simulate_heisenberg_model_single_timestep(wires, couplings, dt, p)
+            simulate_heisenberg_model_single_timestep(wires, couplings, dt, p, backend)
             return qml.state()
 
         init_state = np.zeros(2**wires)

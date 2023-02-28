@@ -32,7 +32,7 @@ def simulate_heisenberg_model(num_wires, couplings, T, depth, p=0, backend='ligh
             R_X(angle_X, wire)
 
 
-def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p):
+def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p, backend):
     """This QNode returns the final state of the spin chain after evolution for a time t, 
     under the Trotter approximation of the exponential of the Heisenberg Hamiltonian.
     
@@ -52,11 +52,11 @@ def simulate_heisenberg_model_single_timestep(num_wires, couplings, dt, p):
     angle_X = -2*couplings['h']*dt
 
     for wire in range(num_wires):
-        R_XX(angle_XX, wire, num_wires, p)
+        R_XX(angle_XX, wire, num_wires, p, backend)
     for wire in range(num_wires):
-        R_YY(angle_YY, wire, num_wires, p)
+        R_YY(angle_YY, wire, num_wires, p, backend)
     for wire in range(num_wires):
-        R_ZZ(angle_ZZ, wire, num_wires, p)
+        R_ZZ(angle_ZZ, wire, num_wires, p, backend)
     for wire in range(num_wires):
         R_X(angle_X, wire)
 
