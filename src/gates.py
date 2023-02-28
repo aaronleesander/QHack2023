@@ -31,5 +31,6 @@ def R_ZZ(angle, wire, num_wires, p, backend):
     qml.CNOT([wire,(wire+1)%num_wires])
     apply_depolarizing(wire, p, backend)
 
+
 def R_X(angle, wire):
     qml.RX(angle, wires=wire)
