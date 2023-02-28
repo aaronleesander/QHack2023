@@ -25,4 +25,4 @@ PennyLane-Lightning: https://github.com/PennyLaneAI/pennylane-lightning
 
 PennyLane-Lightning-GPU: https://github.com/PennyLaneAI/pennylane-lightning-gpu
 
-NVidia cuQuantum: https://github.com/NVIDIA/cuQuantum
+NVidia cuQuantum: https://github.com/NVIDIA/cuQuantum and https://developer.nvidia.com/cuquantum-sdk
