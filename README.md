@@ -2,12 +2,9 @@
 
 This repository was created for the QHack2023 Hackathon.
 
-This project was an equal collaboration between:
-Lion Frangioulis (lion.frangoulis@tum.de)
-Cristian Emiliano Godinez Ramirez
-Emily Haworth (ge96puk@mytum.de)
-Aaron Sander (aaron.sander@tum.de)
-from the Technical University of Munich.
+This project was an equal collaboration between Lion Frangioulis (lion.frangoulis@tum.de), Cristian Emiliano Godinez Ramirez (cristian.godinez@tum.de), Emily Haworth (ge96puk@mytum.de),
+and Aaron Sander (aaron.sander@tum.de) from the Technical University of Munich.
+
 
 
 ## Abstract
