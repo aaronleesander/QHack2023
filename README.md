@@ -9,7 +9,11 @@ In this project, we explore the challenges of simulating noisy quantum algorithm
 
 ## Dependencies
 
-This project was created using Python 3.10 and primarily uses PennyLane-Lightning-GPU which is dependent on the NVidia cuQuantum SDK.
+This project was created using Python 3.11 and Jupyter Notebooks.
+The project primarily uses PennyLane-Lightning-GPU which is dependent on the NVidia cuQuantum SDK which require access to a CUDA 11.0 capable GPU.
+
+This project was run on the Cyxtera/Run:ai cluster using NVidia A100 GPUs.
+This access was given to us as a power-up from the QHack Coding Competition for being in the top 24 teams.
 
 More information can be found at:
 PennyLane-Lightning: https://github.com/PennyLaneAI/pennylane-lightning
