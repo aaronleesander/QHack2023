@@ -10,7 +10,9 @@ def helper_test():
 def draw_circuit_nice(function:qml.qnode, **kwargs):
     "draw quantum function from pennylane in a nice visual format"
     qml.drawer.use_style("black_white")
+    plt.figure(dpi=400)
     fig, ax = qml.draw_mpl(function)(**kwargs)
+    plt.savefig(f"./final_plots/circuit.pdf", format="pdf", bbox_inches='tight')
     plt.show()
 
 def calculate_error(approx, exact):

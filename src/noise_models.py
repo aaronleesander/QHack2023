@@ -24,5 +24,8 @@ def apply_depolarizing(wire, p, backend):
         elif  2*p/3 < r <= p:
             qml.PauliZ(wires=wire)
     elif backend == 'default.mixed':
-        qml.DepolarizingChannel(p, wires=wire)
+        if p!=0:
+            qml.DepolarizingChannel(p, wires=wire)
+        else:
+            pass
 
