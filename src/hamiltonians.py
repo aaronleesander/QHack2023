@@ -25,7 +25,7 @@ def create_ising(h, wires):
 
     return qml.Hamiltonian(couplings,ops)
 
-def create_heisenberg(couplings, wires):
+def create_heisenberg(params, wires):
     """
     create ising hamiltonian
 
@@ -38,23 +38,23 @@ def create_heisenberg(couplings, wires):
         (qml.Hamiltonian): Hamiltonian of Heisenberg model
     """
 
-    couplings = [-couplings[-1]]
+    couplings = [-params[-1]]
     ops = [qml.PauliX(wires-1)]
 
     for i in range(wires-1):
-        couplings = [-couplings[-1]] + couplings
+        couplings = [-params[-1]] + couplings
         ops = [qml.PauliX(i)] + ops        
 
-    for i in range(4):
-        couplings = [-couplings[-2]] + couplings
+    for i in range(wires):
+        couplings = [-params[-2]] + couplings
         ops = [qml.PauliZ(i)@qml.PauliZ((i+1)%wires)] + ops
 
-    for i in range(4):
-        couplings = [-couplings[-3]] + couplings
+    for i in range(wires):
+        couplings = [-params[-3]] + couplings
         ops = [qml.PauliY(i)@qml.PauliY((i+1)%wires)] + ops
 
-    for i in range(4):
-        couplings = [-couplings[0]] + couplings
+    for i in range(wires):
+        couplings = [-params[0]] + couplings
         ops = [qml.PauliX(i)@qml.PauliX((i+1)%wires)] + ops    
 
     return qml.Hamiltonian(couplings,ops)
