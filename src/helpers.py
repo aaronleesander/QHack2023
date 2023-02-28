@@ -19,3 +19,64 @@ def calculate_error(approx, exact):
     #error = 1 - np.abs(np.vdot(approx,sigma_exact))**2
 
     return  abs(1 - qml.math.fidelity(approx, exact))
+
+def calculate_mean(obs:np.ndarray, vectors:list[np.ndarray]):
+    """
+    Calculate the mean (expectation value) of F(vectors)=fidelity.
+    See pennylane.math.fidelity for details
+    Args:
+        obs (np.ndarray): observable object to use for the calculation of mean and deviation. 
+        Real density matrix from density matrix evolution
+    Returns:
+        expectation value of observable
+    """
+    R = len(vectors)
+    m = 0
+    for v in vectors:
+        m += qml.math.fidelity(obs,v)
+    return m/R
+
+
+
+def calculate_std(obs:np.ndarray, vectors:list[np.ndarray], means=None, bias:bool=False):
+    """
+    Calculate the standard deviation for the observable F(vectors)=fidelity 
+
+    Args:
+        obs (np.ndarray): observable object to use for the calculation of mean and deviation. 
+        Real density matrix from density matrix evolution
+        bias (Optional(bool)): Determines the factor in denominator for calculation. Defaults to False -> R(R-1) (unbiased)
+        else R (bias)
+    Returns:
+       standard deviation of observable
+    """
+   
+    R = len(vectors)
+    if not bias:
+        if R == 1:
+            factor = 1
+        else:
+            factor = R*(R-1)
+    else:
+        factor = R
+
+    if not means:
+        mean = calculate_mean(obs=obs, vectors=vectors)
+    s = 0
+    for v in vectors:
+        s += (qml.math.fidelity(obs,v) - mean)**2
+    return np.sqrt(s/factor)
+
+
+def calculate_avg_dms(obs:np.ndarray, vectors:list[np.ndarray]):
+    "states: "
+
+    stds = []
+    Rmax = len(vectors)
+    ntrajs = list(np.arange(0,Rmax+1,10))
+    for idx in ntrajs[1:]:
+        stds.append(calculate_std(obs=obs,vectors=vectors[:idx]))
+
+    exp = 1/np.sqrt(ntrajs[1:])
+    scale = exp[1]/stds[1]
+    return ntrajs, stds, exp, scale

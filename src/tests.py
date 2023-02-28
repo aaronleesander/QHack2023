@@ -59,6 +59,28 @@ def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, cou
         states.append(state/samples)
     return runtimes, states
 
+def calculate_sv_samples(couplings, backend='lightning.qubit', T=1, depth=100, wires=5, p=0.0033, samples=1500):
+    """this function returns both the runtime and fidelity for statevector simulation"""
+    runtimes = [] # will store time it took from start -> time_k for k = {100, 200,...1500}
+    states = [] # will the final state after all the 1500 samples
+    
+    start = timer()
+    for k in range(samples):
+        dev = qml.device(backend, wires=wires)
+        @qml.qnode(dev)
+        def heisenberg_trotter(couplings, T, depth, p):
+            simulate_heisenberg_model(wires, couplings, T, depth, p, backend)
+            return qml.state()
+
+        state = heisenberg_trotter(couplings, T, depth, p)
+        if (k+1)%100 == 0:
+            time_k = timer()
+            runtimes.append(time_k - start)
+
+        states.append(state) # append all the 1500 states for convergence calculation
+
+    return runtimes, states
+
 
 def calculate_heisenberg_fidelity_vs_noise(backend, wires, couplings, T, depth, p_list, samples=1):
     all_fidelities = []
