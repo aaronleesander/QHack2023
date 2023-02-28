@@ -19,9 +19,10 @@ The project primarily uses PennyLane-Lightning-GPU which is dependent on the NVi
 This project was run on the Cyxtera/Run:ai cluster using NVidia A100 GPUs.
 This access was given to us as a power-up from the QHack Coding Competition for being in the top 24 teams.
 
-More information can be found at:
-PennyLane-Lightning: https://github.com/PennyLaneAI/pennylane-lightning
-PennyLane-Lightning-GPU: https://github.com/PennyLaneAI/pennylane-lightning-gpu
-NVidia cuQuantum: https://github.com/NVIDIA/cuQuantum
+More information can be found at
 
-# References
+PennyLane-Lightning: https://github.com/PennyLaneAI/pennylane-lightning
+
+PennyLane-Lightning-GPU: https://github.com/PennyLaneAI/pennylane-lightning-gpu
+
+NVidia cuQuantum: https://github.com/NVIDIA/cuQuantum
