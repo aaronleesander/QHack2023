@@ -25,6 +25,7 @@ def calculate_heisenberg_runtime_vs_qubits(backend, num_wires_list, couplings, T
 
     return runtimes
 
+
 def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, couplings, T, depth, p, samples=1):
     """this function returns both the runtime and fidelity"""
     runtimes = []
@@ -58,6 +59,7 @@ def calculate_heisenberg_runtime_fidelity_vs_qubits(backend, num_wires_list, cou
         runtimes.append(end - start)
         states.append(state/samples)
     return runtimes, states
+
 
 def calculate_sv_samples(couplings, backend='lightning.qubit', T=1, depth=100, wires=5, p=0.0033, samples=1500):
     """this function returns both the runtime and fidelity for statevector simulation"""
@@ -169,25 +171,3 @@ def calculate_heisenberg_entropy_vs_time(backend, wires, couplings, T, depth, p,
 
     return avg_entropies
 
-def find_ground_state(backend, wires, couplings):
-    dev = qml.device(backend, wires=wires)
-
-    @qml.qnode(dev)
-    def model(params, H):
-        """
-        To implement VQE you need an ansatz for the candidate ground state!
-        Define here the VQE ansatz in terms of some parameters (params) that
-        create the candidate ground state. These parameters will
-        be optimized later.
-
-        Args:
-            params (numpy.array): parameters to be used in the variational circuit
-            H (qml.Hamiltonian): Hamiltonian used to calculate the expected value
-
-        Returns:
-            (float): Expected value with respect to the Hamiltonian H
-        """
-
-        #TODO: finish this function
-        raise NotImplemented('not yet implemented')
-        #return qml.expval(H)

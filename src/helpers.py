@@ -1,11 +1,7 @@
-from . import helpers
 import matplotlib.pyplot as plt
 import pennylane as qml
 import pennylane.numpy as np
 
-def helper_test():
-    # Write code here
-    pass
 
 def draw_circuit_nice(function:qml.qnode, **kwargs):
     "draw quantum function from pennylane in a nice visual format"
@@ -15,12 +11,14 @@ def draw_circuit_nice(function:qml.qnode, **kwargs):
     plt.savefig(f"./final_plots/circuit.pdf", format="pdf", bbox_inches='tight')
     plt.show()
 
+
 def calculate_error(approx, exact):
     "approx: sv, exact: dm"
     #sigma_exact = np.sqrt(np.diag(exact))
     #error = 1 - np.abs(np.vdot(approx,sigma_exact))**2
 
     return  abs(1 - qml.math.fidelity(approx, exact))
+
 
 def calculate_mean(obs:np.ndarray, vectors:list[np.ndarray]):
     """
@@ -38,6 +36,7 @@ def calculate_mean(obs:np.ndarray, vectors:list[np.ndarray]):
         m += qml.math.fidelity(obs,v)
     return m/R
 
+
 def calculate_mean_paper(obs:np.ndarray, vectors:list[np.ndarray]):
     s = np.zeros_like(vectors[0])
     R = len(vectors)
@@ -47,6 +46,7 @@ def calculate_mean_paper(obs:np.ndarray, vectors:list[np.ndarray]):
     sigma_exact = np.diag(obs)
     f = abs(np.vdot(np.sqrt(phi), np.sqrt(sigma_exact)))**2
     return f
+
 
 def calculate_avg_dms(vectors:list[np.ndarray]):
     r"calculate average density matrix for list of \ket{phi^r}"
@@ -59,7 +59,6 @@ def calculate_avg_dms(vectors:list[np.ndarray]):
         rho += np.outer(v, v.conj())
     rho_avg = (rho/R)
     return rho_avg
-
 
 
 def calculate_std(obs:np.ndarray, vectors:list[np.ndarray], means=None, bias:bool=False, mode=str):

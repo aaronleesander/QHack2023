@@ -1,6 +1,7 @@
 import pennylane as qml
 import pennylane.numpy as np
 
+
 def create_ising(h, wires):
     """
     create ising hamiltonian
@@ -25,9 +26,10 @@ def create_ising(h, wires):
 
     return qml.Hamiltonian(couplings,ops)
 
+
 def create_heisenberg(params, wires):
     """
-    create ising hamiltonian
+    create heisenberg hamiltonian
 
     Args:
         couplings (list(float)): 

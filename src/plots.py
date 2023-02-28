@@ -2,19 +2,6 @@ import matplotlib.pyplot as plt
 import os
 
 
-# def plot_runtimes_vs_qubits(runtimes_model1, runtimes_model2, depth, p=0, labels=["CPU", "GPU"], samples=1, save=True):
-#     plt.figure(figsize=[10, 8])
-#     plt.plot(runtimes_model1, label=labels[0])
-#     plt.plot(runtimes_model2, label=labels[1])
-#     plt.title(f"Runtime vs. Wires (Heisenberg Model, Depth={depth}, p={p}), samples={samples})")
-#     plt.xlabel("# Wires")
-#     plt.ylabel("Runtime (s)")
-#     plt.legend()
-#     if save:
-#         plt.savefig(f"time_p{p}_samples{samples}.pdf", format="pdf", bbox_inches='tight')
-#     plt.show()
-
-
 def plot_runtimes_vs_qubits(num_wires_list, runtimes1, runtimes2):
     script_dir = os.path.dirname(__file__) 
     rel_path = "runtime_vs_qubits.pdf"
@@ -90,6 +77,7 @@ def plot_entropies_vs_time(entropies_list, p_list):
     plt.legend()
     plt.savefig(abs_file_path, dpi=400)
     plt.show()
+
 
 def plot_runtime_sampling(times_dm, times_q_cpu, times_q_GPU):
     script_dir = os.path.dirname(__file__) 
